@@ -1,0 +1,23 @@
+\documentclass[10pt, a5paper]{article}
+\usepackage[b5paper, total={9.95cm, 19cm}]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\pagestyle{empty}
+
+% ОБЯЗАТЕЛЬНО посмтореть скобки и модули после подбора шрифта
+
+\begin{document}
+
+Согласно теореме Коши, для каждого $x > x_0$ существует такое \(\xi=\xi( x,x_0) > x_0 \), что \[f(x)=\frac{f^{'}(\xi)}{g^{'}(\xi)} [g(x)-g(x_0)]+f(x_0). \] Отсюда \[\frac{f(x)}{g(x)}-k = \frac{f^{'}(\xi)}{g^{'}(\xi)}-k + \frac{1}{g(x)}\Big[f(x_0)-\frac{f^{'}(\xi)}{g^{'}(\xi)}g(x_0)\Big].\] Положив \[\alpha(x)\stackrel{def}{=} \frac{1}{|g(x)|}\Big|f(x_0)-\frac{f^{'}(\xi)}{g^{'}(\xi)}g(x_0)\Big|,\] будем иметь \[\Big|\frac{f(x)}{g(x)}-k\Big| \leq \Big|\frac{f^{'}(\xi)}{g^{'}(\xi)}-k\Big|+\alpha(x).\eqno(12.22)\]
+
+В силу условия (12.21), отношение $\frac{f^{'}(\xi)}{g^{'}(\xi)}$ ограничено при $x>x_0$. Следовательно, ${\underset{x\to{+}\infty}{\lim}\alpha(x)}\underset{(12.19)}{=}0.$ Поэтому найдется такое $x_1>x_0$, что для всех $x>x_1$ будет выполняться неравенство \[\alpha(x)<\frac{\varepsilon}{2}\eqno(12.23)\] и, таким образом, при $x>x_1$ верно неравенство \[\Big|\frac{f(x)}{g(x)}\Big|-k\Big|\underset{(12.22)} {\leq}\Big|\frac{f^{'}(\xi)}{g^{'}(\xi)}-k\Big| +\alpha(x)\underset{(12.23)}{\underset{(12.21)}{<}} \frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon.\] а это и означает, что $\underset{x\to{+}\infty}{\lim}\frac{f(x)}{g(x)}=k.$
+
+2) Если, например,\[\underset{x\to{+}\infty}{\lim}\frac{f^{'}(x)}{g^{'}(x)}={+}\infty,\eqno(12.24)\] то для любого $c>0$ существует такое $x_0>a$, что для всех $x>x_0$ выполняются неравенства $g(x)\neq0$ и \[\frac{f^{'}(x)}{g^{'}(x)}>3c.\eqno(12.25)\]
+
+Согласно теореме Коши, при любом $x>x_0$ имеет место равенство \[\frac{f(x)}{g(x)}=\frac{f^{'}(\xi)}{g^{'}(\xi)}\Big[1-\frac{g(x_0)}{g(x)}\Big]+\frac{f(x_0)}{g(x)},\]
+\begin{center}
+    \line(1,0){90} \\
+    338
+\end{center}
+\end{document}
