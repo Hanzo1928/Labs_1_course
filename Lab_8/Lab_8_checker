@@ -1,0 +1,64 @@
+Задание №1:
+
+#include <stdio.h>
+
+int main(void)
+{
+    int a;
+    int b;
+
+    scanf("%d", &a);
+    scanf("%d", &b);
+
+    printf("%d\n", a + b);
+
+    return 0;
+}
+
+Задание №2:
+
+#include <stdio.h>
+int main(void)
+{
+    int sum;
+    int x;
+    int k;
+
+    scanf("%d", &k);
+
+    sum = 0;
+    for (int i = 1 ; i <= k ; i++) {
+        scanf("%d", &x);
+
+        sum = sum + x;
+    }
+
+    printf("%d\n", sum);
+
+    return 0;
+}
+
+Задание №3:
+
+#include <stdio.h>
+int main(void)
+{
+    int sum;
+    int k;
+    int x;
+
+    scanf("%d", &k);
+
+    sum = 0;
+    for (int i = 1 ; i <= k ; i++) {
+        scanf("%d", &x);
+
+        if (x >= 10) {
+            sum = sum + x;
+        }
+    }
+
+    printf("%d\n", sum);
+
+    return 0;
+}
