@@ -1,0 +1,1255 @@
+\documentclass{article}
+\author{Dyakov Kirill}
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage[12pt]{extsizes}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{tikz}  
+\usetikzlibrary{shapes.geometric}
+\usepackage{verbatim}
+\usetikzlibrary{graphs}
+\usetikzlibrary{tikzmark,overlay-beamer-styles}
+\usetikzlibrary{arrows}
+\geometry{
+	a4paper,
+	top=3mm, 
+	right=4mm, 
+	bottom=4mm, 
+	left=4mm,
+	head=-1mm
+}
+\tikzstyle{materia}=[draw, text width=6.0em, text centered,
+minimum height=1.5em]
+\tikzstyle{block} = [materia, text width=8em, minimum width=10em,
+minimum height=3em, rounded corners]
+\begin{document}
+\begin{center}
+	\textbf{МОСКОВСКИЙ АВИАЦИОННЫЙ ИНСТИТУТ}
+	\\
+	\textbf{(НАЦИОНАЛЬНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ УНИВЕРСИТЕТ)}
+	\\ 
+	\textbf{ФАКУЛЬТЕТ ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И ПРИКЛАДНОЙ МАТЕМАТИКИ}
+	\\ 
+	\textbf{КАФЕДРА МАТЕМАТИЧЕСКОЙ КИБЕРНЕТИКИ}
+\end{center}
+\vspace{100mm}
+\begin{center}
+	\begin{Large}\textbf{КУРСОВАЯ РАБОТА}\end{Large}
+	\vspace{5mm}
+	\\
+	\textbf{ПЕРЕЧИСЛЕНИЕ ПУТЕЙ ОРИЕНТИРОВАННОГО ГРАФА МЕТОДОМ ЛАТИНСКОЙ КОМПОЗИЦИИ}
+\end{center}
+\vspace{70mm}
+\begin{large}
+	\par
+	\hspace{105mm}\textbf{Студент: Березнев Н.В.}
+	\vspace{3mm}
+	\par
+	\hspace{105mm}\textbf{Группа 8О-103Б}
+	\vspace{3mm}
+	\par
+	\hspace{105mm}\textbf{Преподаватель: Смерчинская С.О.}
+	\vspace{3mm}
+	\par
+	\hspace{105mm}\textbf{Оценка:}
+	\vspace{3mm}
+	\par
+	\hspace{105mm}\textbf{Дата:}
+\end{large}
+\newpage
+
+
+\voffset = 8mm
+\begin{flushleft}
+	\begin{Large}
+		\hspace{8mm}\textbf{Задание}
+		\vspace{10mm}
+		\\
+		\hspace{8mm}\textbf{Вариант 4}
+	\end{Large}
+\end{flushleft}
+\vspace{8mm}
+\large
+\hspace{8mm}\textbf{1.} Определить для орграфа, заданного матрицей смежности:
+\vspace{5mm}
+\\
+\hspace*{50mm}
+$A = 
+\begin{pmatrix}
+	0 & 1 & 1 & 0\\
+	1 & 0 & 1 & 0\\
+	0 & 0 & 0 & 0\\
+	1 & 1 & 0 & 0\\
+\end{pmatrix}$
+\vspace{5mm}
+\\
+\hspace*{12mm} а) матрицу односторонней связности;
+\\
+\hspace*{12mm} б) матрицу сильной связности;
+\\
+\hspace*{12mm} в) компоненты сильной связности;
+\\
+\hspace*{12mm} г) матрицу контуров;
+\\
+\hspace*{12mm} д) изображение графа и компонент сильной связности;
+\\
+\\
+\hspace*{8mm}\textbf{2.} Используя алгоритм Терри, определить замкнутый маршрут, проходящий ровно
+\\
+\hspace*{12mm} по два раза (по одному в каждом направлении) через каждое ребро графа.
+\vspace{5mm}
+\\
+
+\begin{tikzpicture}
+	[node distance={30mm}, thick, main/.style = {draw, circle}]
+	\hspace*{50mm}\node[main] (4) {$4$}; 
+	\node[main] (2) [above left of=4] {$2$};
+	\node[main] (1) [below left of=4] {$1$};
+	\node[main] (3) [above right of=4] {$3$};
+	\node[main] (5) [below right of=4] {$5$};
+	\draw (1) -- (2);
+	\draw (1) -- (4);
+	\draw (1) -- (5);
+	\draw (2) -- (3);
+	\draw (2) -- (4);
+	\draw (3) -- (4);
+	\draw (3) -- (5);
+\end{tikzpicture} 
+\\
+\\
+\hspace*{8mm}\textbf{3.} Используя алгоритм “фронта волны”, найти все минимальные пути из первой
+\\
+\hspace*{12mm} вершины в последнюю орграфа, заданного матрицей смежности.
+\vspace{5mm}
+\\
+\hspace*{40mm}
+$A = 
+\begin{pmatrix}
+	0 & 0 & 0 & 1 & 1 & 0 & 0\\
+	1 & 0 & 1 & 1 & 0 & 1 & 1\\
+	1 & 1 & 0 & 1 & 1 & 0 & 1\\
+	0 & 0 & 0 & 0 & 1 & 1 & 0\\
+	1 & 0 & 0 & 1 & 0 & 1 & 0\\
+	0 & 1 & 1 & 1 & 0 & 0 & 0\\
+	1 & 1 & 0 & 0 & 1 & 1 & 0\\
+\end{pmatrix}$
+
+
+\newpage
+\hoffset=2mm
+\textbf{4.} Используя алгоритм Форда, найти минимальные пути из первой вершины во все
+\\ \hspace*{10mm} достижимые вершины в нагруженном графе, заданном матрицей длин дуг.
+\vspace{5mm}
+\\
+\hspace*{40mm}
+$C = 
+\begin{pmatrix}
+	\infty & 3 & 5 & \infty & 6 & \infty & \infty & \infty \\
+	2 & \infty & 1 & 4 & \infty & \infty & \infty & \infty \\
+	3 & \infty & \infty & 4 & 2 & \infty & \infty & \infty \\
+	\infty & \infty & \infty & \infty & \infty & 3 & 5 & \infty \\
+	4 & \infty & \infty & \infty & \infty & 6 & \infty & 7 \\
+	\infty & \infty & \infty & \infty & \infty & \infty & 3 & 2 \\
+	6 & \infty & \infty & \infty & \infty & \infty & \infty & 1 \\
+	8 & \infty & \infty & \infty & 11 & \infty & \infty & \infty
+\end{pmatrix}$
+\vspace{5mm}
+\\
+\hspace*{4mm} \textbf{5.}  Найти остовное дерево с минимальной суммой длин входящих в него ребер.
+\vspace{5mm}
+\\
+\begin{tikzpicture}
+	[node distance={20mm}, thick, main/.style = {draw, circle}]
+	\hspace*{50mm}
+	\node[main] (1) {$$};
+	\node[main] (2) [right of = 1] {$$};
+	\node[main] (3) [right of = 2]{$$};
+	\node[main] (4) [right of = 3]{$$};
+	\node[main] (5) [below of = 1]{$$};
+	\node[main] (6) [below of = 2]{$$};
+	\node[main] (7) [below of = 3] {$$};
+	\node[main] (8) [below of = 4] {$$};
+	\node[main] (9) [below of = 5] {$$};
+	\node[main] (10) [below of = 6] {$$};
+	\node[main] (11) [below of = 7] {$$};
+	\node[main] (12) [below of = 8] {$$};
+	\draw (1) -- node[above] {2} (2);
+	\draw (2) -- node[above] {6} (3);
+	\draw (3) -- node[above] {7} (4);
+	\draw (1) -- node[left] {1} (5);
+	\draw (2) -- node[left] {5} (6);
+	\draw (3) -- node[left] {5} (7);
+	\draw (4) -- node[right] {6} (8);
+	\draw (5) -- node[above] {8} (6);
+	\draw (6) -- node[above] {4} (7);
+	\draw (7) -- node[above] {1} (8);
+	\draw (5) -- node[left] {7} (9);
+	\draw (6) -- node[left] {5} (10);
+	\draw (7) -- node[left] {5} (11);
+	\draw (8) -- node[right] {5} (12);
+	\draw (9) -- node[below] {9} (10);
+	\draw (10) -- node[below] {7} (11);
+	\draw (11) -- node[below] {3} (12);
+\end{tikzpicture} 
+\vspace{5mm}
+\\
+\hspace*{4mm} \textbf{6.}  Пусть каждому ребру неориентированного графа соответствует некоторый
+\\ \hspace*{12mm}элемент электрической цепи. Составить линейно независимые системы
+\\ \hspace*{12mm}уравнений Кирхгофа для токов и напряжений. Пусть первому и пятому ребру
+\\ \hspace*{12mm}соответствуют источники тока с ЭДС $E1$ и $E2$, а остальные элементы являются
+\\ \hspace*{10mm} сопротивлениями.  Используя закон Ома, и, предполагая внутренние
+\\ \hspace*{12mm}сопротивления источников тока равными нулю, получить систему уравнений для
+\\ \hspace*{10mm} токов.
+\vspace{5mm}
+\\
+\begin{tikzpicture}
+	[node distance={20mm}, thick, main/.style = {draw, circle}]
+	\hspace*{50mm}
+	\node[main] (1) {$$};
+	\node[main] (2) [below right of = 1, below = 10pt, right = 50pt] {$$};;
+	\node[main] (3) [below left of = 1, below = 10pt, left = 50pt] {$$};;
+	\node[main] (4) [below right of = 1, below = 50pt, right = 3pt] {$$};;
+	\node[main] (5) [below left of = 1, below = 50pt, left = 3pt] {$$};;
+\draw (1) -- node[above] {$q_1$} (3);
+\draw (1) -- node[above] {$q_2$} (2);
+\draw (2) -- node[above] {$q_3$} (4);
+\draw (4) -- node[above] {$q_4$} (5);
+\draw (5) -- node[above] {$q_5$} (3);
+\draw (3) -- node[above] {$q_6$} (2);
+\draw (1) -- node[above] {$q_8$} (4);
+\draw (3) -- node[above] {$q_7$} (4);
+\draw (5) -- node[above] {$q_9$} (2);
+
+	
+	
+\end{tikzpicture} 
+
+\newpage
+\noindent
+\hspace*{4mm} \textbf{7.} Построить максимальный поток по транспортной сети.
+\vspace{5mm}
+\\
+\begin{tikzpicture}
+	[node distance={20mm}, thick, main/.style = {draw, circle}]
+	\hspace*{30mm}
+	\node[main] (1) {$1$};
+	\node[main] (2) [above right of = 1, above = 20pt, right = 3pt] {$2$};
+	\node[main] (3) [above right of = 2, above = -5mm, right = 40pt, node distance={20mm}]{$3$};
+	\node[main] (4) [below right of = 3, below = -5mm, right = 40pt]{$4$};
+	\node[main] (5) [right of = 1, node distance={45mm}]{$5$};
+	\node[main] (6) [right of = 5, node distance={65mm}]{$9$};
+	\node[main] (7) [below right of = 1, below = 20pt, right = 3pt] {$6$};
+	\node[main] (8) [below right of = 7, below = -5mm, right = 40pt, node distance={20mm}]{$7$};
+	\node[main] (9) [above right of = 8, above= -5mm, right = 40pt]{$4$};
+	\draw[->] (1) -- node[above] {3} (2);
+	\draw[->] (2) -- node[above] {3} (3);
+	\draw[->] (3) -- node[above] {9} (4);
+	\draw[->] (4) -- node[above] {11} (6);
+	\draw[->] (1) to [out=0,in=230,looseness=0.5] node[above = -2mm, left = 5mm] {10} (3);
+	\draw[->] (1) -- node[above = 3mm, right=5mm] {5} (5);
+	\draw[->] (5) -- node[above] {4} (6);
+	\draw[->] (1) -- node[below] {3} (7);
+	\draw[->] (7) -- node[below] {3} (8);
+	\draw[->] (8) -- node[below] {7} (9);
+	\draw[->] (9) -- node[below] {13} (6);
+	\draw[->] (1) to [out=0,in=130,looseness=0.5] node[below = -2mm, left = 5mm] {7} (8);
+	\draw[->] (2) -- node[above = 6mm, left = 1mm] {2} (5);
+	\draw[->] (5) -- node[above] {3} (4);
+	\draw[->] (7) -- node[above] {6} (5);
+	\draw[->] (5) -- node[above] {5} (9);
+\end{tikzpicture} 
+\vspace{5mm}
+\\
+\hspace*{4mm} \textbf{8.} Перечисление путей ориентированного графа методом латинской композиции. 
+\\
+\hspace*{11mm}1. Изучить алгоритм.
+\\
+\hspace*{11mm}2. Составить программу алгоритма.
+\\
+\hspace*{11mm}3. Отладить тестовые примеры.
+\\
+\hspace*{11mm}4. Провести оценку сложности алгоритма.
+\\
+\hspace*{11mm}5. Составить прикладную задачу, для решения которой используется данный алгоритм.
+
+
+\newpage
+\large
+\begin{center}
+		\textbf{Задание №1}
+\end{center}
+\par
+а) \textbf{Способ №1}
+\vspace{5mm}
+\par \hspace{8mm} $A = 
+\begin{pmatrix}
+	0 & 1 & 1 & 0\\
+	1 & 0 & 1 & 0\\
+	0 & 0 & 0 & 0\\
+	1 & 1 & 0 & 0\\
+\end{pmatrix}$
+\vspace{5mm}
+\par
+
+\hspace{8mm} $A^2 = 
+\begin{pmatrix}
+	0 & 1 & 1 & 0\\
+	1 & 0 & 1 & 0\\
+	0 & 0 & 0 & 0\\
+	1 & 1 & 0 & 0\\
+\end{pmatrix}$
+$*\begin{pmatrix}
+	0 & 1 & 1 & 0\\
+	1 & 0 & 1 & 0\\
+	0 & 0 & 0 & 0\\
+	1 & 1 & 0 & 0\\
+\end{pmatrix}$ =
+$\begin{pmatrix}
+	1 & 0 & 1 & 0\\
+	0 & 1 & 1 & 0\\
+	0 & 0 & 0 & 0\\
+	1 & 1 & 1 & 0\\
+\end{pmatrix}$
+
+\vspace{5mm}
+\par
+
+\hspace{8mm} $A^3 = 
+\begin{pmatrix}
+	1 & 0 & 1 & 0\\
+	0 & 1 & 1 & 0\\
+	0 & 0 & 0 & 0\\
+	1 & 1 & 1 & 0\\
+\end{pmatrix}$
+$*\begin{pmatrix}
+	0 & 1 & 1 & 0\\
+	1 & 0 & 1 & 0\\
+	0 & 0 & 0 & 0\\
+	1 & 1 & 0 & 0\\
+\end{pmatrix}$ =
+$\begin{pmatrix}
+	0 & 1 & 1 & 0\\
+	1 & 0 & 1 & 0\\
+	0 & 0 & 0 & 0\\
+	1 & 1 & 1 & 0\\
+\end{pmatrix}$ 
+
+\vspace{5mm}
+\par
+
+\hspace{8mm}
+$T = E \vee A \vee A^2 \vee A^3 = 
+\begin{pmatrix}
+	1 & 1 & 1 & 0\\
+	1 & 1 & 1 & 0\\
+	0 & 0 & 1 & 0\\
+	1 & 1 & 1 & 1\\
+\end{pmatrix}$
+
+\par 
+\hspace{6mm}\textbf{Способ №2}
+\begin{center}
+	k = 0
+\end{center}
+\vspace{5mm}
+\par
+\hspace{8mm}
+$T^{(0)} = E \vee A = 
+\begin{pmatrix}
+	1 & 0 & 0 & 0\\
+	0 & 1 & 0 & 0\\
+	0 & 0 & 1 & 0\\
+	0 & 0 & 0 & 1\\
+\end{pmatrix}$
+$\vee\begin{pmatrix}
+	0 & 1 & 1 & 0\\
+	1 & 0 & 1 & 0\\
+	0 & 0 & 0 & 0\\
+	1 & 1 & 0 & 0\\
+\end{pmatrix}$ =
+$\begin{pmatrix}
+	1 & 1 & 1 & 0\\
+	1 & 1 & 1 & 0\\
+	0 & 0 & 1 & 0\\
+	1 & 1 & 0 & 1\\
+\end{pmatrix}$
+
+\begin{center}
+	k = 1, \hspace{5mm} k - 1 = 0
+\end{center}
+\vspace{5mm}
+\par
+\hspace{8mm} $T^{(1)} = 
+\begin{pmatrix}
+	1 & 1 & 1 & 0\\
+	1 & 1 & 1 & 0\\
+	0 & 0 & 1 & 0\\
+	1 & 1 & 0 & 1\\
+\end{pmatrix} \vee
+\begin{pmatrix}
+	1 & 1 & 1 & 0\\
+	1 & 1 & 1 & 0\\
+	0 & 0 & 1 & 0\\
+	1 & 1 & 1 & 1\\
+\end{pmatrix} = 
+\begin{pmatrix}
+	1 & 1 & 1 & 0\\
+	1 & 1 & 1 & 0\\
+	0 & 0 & 1 & 0\\
+	1 & 1 & 1 & 1\\
+\end{pmatrix}$
+\vspace{5mm}
+\begin{center}
+	.....
+\end{center}
+
+\vspace{5mm}
+\newpage
+\hspace{8mm} Очевидно, что $T^{(4)} = 
+\begin{pmatrix}
+	1 & 1 & 1 & 0\\
+	1 & 1 & 1 & 0\\
+	0 & 0 & 1 & 0\\
+	1 & 1 & 1 & 1\\
+\end{pmatrix}$, значит $T = 
+\begin{pmatrix}
+    1 & 1 & 1 & 0\\
+	1 & 1 & 1 & 0\\
+	0 & 0 & 1 & 0\\
+	1 & 1 & 1 & 1\\
+\end{pmatrix}$
+\vspace{5mm}
+\par
+б) $\overline{S} = T \& T^T = \begin{pmatrix}
+	1 & 1 & 1 & 0\\
+	1 & 1 & 1 & 0\\
+	0 & 0 & 1 & 0\\
+	1 & 1 & 1 & 1\\
+\end{pmatrix} \& 
+\begin{pmatrix}
+	1 & 1 & 1 & 0\\
+	1 & 1 & 1 & 0\\
+	0 & 0 & 1 & 0\\
+	1 & 1 & 1 & 1\\
+\end{pmatrix} = 
+\begin{pmatrix}
+	1 & 1 & 0 & 0\\
+	1 & 1 & 0 & 0\\
+	0 & 0 & 1 & 0\\
+	0 & 0 & 0 & 1\\
+\end{pmatrix}$
+\vspace{5mm}
+\par
+\hspace{5mm}$\overline{S} = \begin{pmatrix}
+	1 & 1 & 0 & 0\\
+	1 & 1 & 0 & 0\\
+	0 & 0 & 1 & 0\\
+	0 & 0 & 0 & 1\\
+\end{pmatrix}$ - матрица сильной связности
+\vspace{5mm}
+\par
+в) $\overline{S} = \begin{pmatrix}
+	1 & 1 & 0 & 0\\
+	1 & 1 & 0 & 0\\
+	0 & 0 & 1 & 0\\
+	0 & 0 & 0 & 1\\
+\end{pmatrix}
+\begin{matrix} \\ \\ \\\end{matrix} =>
+\hspace{5mm}\overline{S_1} = \begin{pmatrix}
+	0 & 0 & 0 & 0\\
+	0 & 0 & 0 & 0\\
+	0 & 0 & 1 & 0\\
+	0 & 0 & 0 & 1\\
+\end{pmatrix} 
+\begin{matrix} \\ \\ \\\end{matrix} =>
+\hspace{5mm}\overline{S_2} = \begin{pmatrix}
+	0 & 0 & 0 & 0\\
+	0 & 0 & 0 & 0\\
+	0 & 0 & 0 & 0\\
+	0 & 0 & 0 & 1\\
+\end{pmatrix}$ 
+\vspace{5mm}
+\par
+г) $ K = \overline{S} \& A = \begin{pmatrix}
+	1 & 1 & 0 & 0\\
+	1 & 1 & 0 & 0\\
+	0 & 0 & 1 & 0\\
+	0 & 0 & 0 & 1\\
+\end{pmatrix} \& 
+\begin{pmatrix}
+	0 & 1 & 1 & 0\\
+	1 & 0 & 1 & 0\\
+	0 & 0 & 0 & 0\\
+	1 & 1 & 0 & 0\\
+\end{pmatrix} = 
+\begin{pmatrix}
+	0 & 1 & 0 & 0\\
+	1 & 0 & 0 & 0\\
+	0 & 0 & 0 & 0\\
+	0 & 0 & 0 & 0\\
+\end{pmatrix}$
+\vspace{5mm}
+\par
+д) \par\begin{tikzpicture}
+	[node distance={20mm}, thick, main/.style = {draw, circle}]
+	\hspace*{10mm}
+	\node[main] (1) {$V_1$};
+	\node[main] (2) [right of = 1] {$V_2$};
+	\node[main] (3) [below of = 2]{$V_3$};
+	\node[main] (4) [below of = 1]{$V_4$};
+	\draw[->] (1) -- (2);
+	\draw[->] (2) -- (1);
+\end{tikzpicture}
+\newpage
+\begin{center}
+	\textbf{Задание №2}
+\end{center}
+$$
+\begin{tikzpicture}
+	[node distance={50mm}, thick, main/.style = {draw, circle}]
+	\node[main] (4) {$4$}; 
+	\node[main] (2) [above left of=4] {$2$};
+	\node[main] (1) [below left of=4] {$1$};
+	\node[main] (3) [above right of=4] {$3$};
+	\node[main] (5) [below right of=4] {$5$};
+	\draw (1) -- node[left] {$\uparrow$} node[right] {$\downarrow$} (2);
+	\draw (1) -- node[above, rotate=45] {$\leftarrow$} node[below, rotate=45] {$\rightarrow$}(4);
+	\draw (1) -- node[below] {$\rightarrow$} node[above] {$\leftarrow$}(5);
+	\draw (2) -- node[below] {$\rightarrow$} node[above] {$\leftarrow$}(3);
+	\draw (2) -- node[above, rotate=-45] {$\leftarrow$} node[below, rotate=-45] {$\rightarrow$}(4);
+	\draw (3) -- node[above, rotate=45] {$\leftarrow$} node[below, rotate=45] {$\rightarrow$}(4);
+	\draw (3) -- node[right] {$\uparrow$} node[left] {$\downarrow$} (5);
+\end{tikzpicture} $$
+\begin{center}
+	1 $\rightarrow$ 2 $\rightarrow$  3 $\rightarrow$  5 $\rightarrow$ 1 $\rightarrow$  4 $\rightarrow$  3 $\rightarrow$  2 $\rightarrow$  4 $\rightarrow$  1 $\rightarrow$  5 $\rightarrow$  3 $\rightarrow$  4  $\rightarrow$ 2 $\rightarrow$ 1
+\end{center}
+\par
+\newpage
+\begin{center}
+	\textbf{Задание №3}
+\end{center}
+\vspace{5mm}
+\begin{minipage}{.45\linewidth}
+	\begin{flushleft}
+		\hspace*{8mm}
+		$W_0 (v_1) = \{v_1\}$
+		\vspace{3mm}
+		\\
+		\hspace*{8mm}
+		$\Gamma W_0 (v_1) = \{v_4, v_5\}$
+		\vspace{3mm}
+		\\
+		\hspace*{8mm}
+		$\Gamma W_1 (v_1) = \{v_6\}$
+		\vspace{3mm}
+		\\
+		\hspace*{8mm}
+		$\Gamma W_2 (v_1) = \{v_2, v_3\}$
+		\vspace{3mm}
+		\\
+		\hspace*{8mm}
+		$\Gamma W_3 (v_1) = \{v_7\}$
+		\vspace{3mm}
+		\\
+		\hspace*{8mm}
+	\end{flushleft}
+\end{minipage}
+\begin{minipage}{.45\linewidth}
+	\begin{flushright}
+		\begin{tikzpicture}
+			[node distance={30mm}, thick, main/.style = {draw, circle}]
+			\vspace{-10mm}
+			\node[main] (1) {$V_1$} node[right = 4mm] {$--- W_0 (V_1)--- 0$} ;
+			\node[main] (4) [below left of = 1]{$V_4$};
+			\node[main] (5) [below right of = 1]{$V_5$} node[right of = 5] {$ --- W_1 (V_1)--- 1$};
+			\node[main] (6) [below left of = 5]{$V_6$} node[right of = 6] {$ --- W_2 (V_1)--- 2$};
+			\node[main] (2) [below left of = 6]{$V_2$};
+			\node[main] (3) [below right of = 6]{$V_3$} node[right of = 3] {$ --- W_3 (V_1)--- 3$};
+			\node[main] (7) [below left of = 3]{$V_7$} node[right of = 7] {$ --- W_4 (V_1)--- 4$};
+			\draw[->] (1) -- (4) ;
+			\draw[->] (1) -- (5) ;
+			\draw[->] (5) -- (6) ;
+			\draw[->] (4) -- (6) ;
+			\draw[->] (6) -- (2) ;
+			\draw[->] (6) -- (3) ;
+			\draw[->] (3) -- (7) ;
+			\draw[->] (2) -- (7) ;
+		\end{tikzpicture} 
+	\end{flushright}
+\end{minipage}
+\vspace{7mm}
+\\
+\hspace*{8mm} Найдем промежуточные вершины кратчайших путей:
+\\
+\hspace*{12mm} 1) $v_7$
+\\
+\hspace*{12mm} 2) $w_3(v_1) \cap \Gamma^{-1} v_8 =  \{v_2, v_3\} \cap \{v_2, v_3\} = \{v_2, v_3\}$
+\\
+\hspace*{12mm} 3.1) $w_2(v_1) \cap \Gamma^{-1} v_2 =  \{v_6\} \cap \{v_3, v_6, v_7\} = \{v_6\}$
+\\
+\hspace*{12mm} 3.2) $w_2(v_1) \cap \Gamma^{-1} v_3 =  \{v_6\} \cap \{v_2, v_6\} = \{v_6\}$
+\\
+\hspace*{12mm} 4.1) $w_1(v_1) \cap \Gamma^{-1} v_6 =  \{v_4, v_5\} \cap \{v_2, v_4, v_5, v_7\} = \{v_4, v_5\}$
+\\
+\hspace*{12mm} 4.2) $w_1(v_1) \cap \Gamma^{-1} v_6 =  \{v_4, v_5\} \cap \{v_2, v_4, v_5, v_7\} = \{v_4, v_5\}$
+\\
+\hspace*{12mm} 5.1.1) $w_0(v_1) \cap \Gamma^{-1} v_4 =  \{v_1\} \cap \{v_1, v_2, v_3, v_5, v_6\} = \{v_1\}$
+\\
+\hspace*{12mm} 5.1.2) $w_0(v_1) \cap \Gamma^{-1} v_5 =  \{v_1\} \cap \{v_1, v_3, v_4, v_7\} = \{v_1\}$
+\\
+\hspace*{12mm} 5.2.1) $w_0(v_1) \cap \Gamma^{-1} v_4 =  \{v_1\} \cap \{v_1, v_2, v_3, v_5, v_6\} = \{v_1\}$
+\\
+\hspace*{12mm} 5.2.2) $w_0(v_1) \cap \Gamma^{-1} v_5 =  \{v_1\} \cap \{v_1, v_3, v_4, v_7\} = \{v_1\}$\\\\
+
+\hspace*{8mm} Кратчайших путей 4:
+\\
+\hspace*{12mm} 1) $v_1 - v_4 - v_6 - v_2 - v_7$
+\\
+\hspace*{12mm} 2) $v_1 - v_4 - v_6 - v_3 - v_7$
+\\
+\hspace*{12mm} 3) $v_1 - v_5 - v_6 - v_2 - v_7$
+\\
+\hspace*{12mm} 4) $v_1 - v_5 - v_6 - v_3 - v_7$
+\newpage
+\begin{center}
+	\textbf{Задание №4}
+\end{center}
+\hspace{10mm}$C = 
+\begin{pmatrix}
+	\infty & 3 & 5 & \infty & 6 & \infty & \infty & \infty \\
+	2 & \infty & 1 & 4 & \infty & \infty & \infty & \infty \\
+	3 & \infty & \infty & 4 & 2 & \infty & \infty & \infty \\
+	\infty & \infty & \infty & \infty & \infty & 3 & 5 & \infty \\
+	4 & \infty & \infty & \infty & \infty & 6 & \infty & 7 \\
+	\infty & \infty & \infty & \infty & \infty & \infty & 3 & 2 \\
+	6 & \infty & \infty & \infty & \infty & \infty & \infty & 1 \\
+	8 & \infty & \infty & \infty & 11 & \infty & \infty & \infty
+\end{pmatrix}$
+\vspace{5mm}
+\par
+\hspace{2mm}
+Составим таблицу итераций:
+\begin{center}
+		\begin{tabular}{|\hspace{5mm}c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+			\hline
+			$ $& $V_1$ & $V_2$ & $V_3$ & $V_4$ & $V_5$ & $V_6$ & $V_7$ & $V_8$ & $\lambda_i^{(0)}$ & $\lambda_i^{(1)}$ & $\lambda_i^{(2)}$ & $\lambda_i^{(3)}$ & $\lambda_i^{(4)}$ & $\lambda_i^{(5)}$ & $\lambda_i^{(6)}$ & $\lambda_i^{(7)}$ \\ \hline
+			
+			$V_1$ & $\infty$ & 3 & 5 & $\infty$ & 6 & $\infty$ & $\infty$ & $\infty$ & \tikzmarknode{m1}{0} & 0 & 0 & 0 & 0 & 0 & 0 & 0\\ \hline
+			
+			$V_2$ & 2 & $\infty$ & 1 & 4 & $\infty$ &  $\infty$ & $\infty$ & $\infty$ & $\infty$ & \tikzmarknode{m2}{3} & 3 & 3 & 3 & 3 & 3 & 3\\ \hline
+			
+			$V_3$ & 3 & $\infty$ & $\infty$ & 4 & 2 & $\infty$ & $\infty$ & $\infty$ & $\infty$ & 5 & \tikzmarknode{m3}{4} & 4 & 4 & 4 & 4 & 4 \\ \hline
+			
+			$V_4$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & 3 & 5 & $\infty$ & $\infty$ & $\infty$ & \tikzmarknode{m4}{7} & 7 & 7 & 7 & 7 & 7 \\ \hline
+			
+			$V_5$ & 4 & $\infty$ & $\infty$ & $\infty$ & $\infty$ & 6 & $\infty$ & 7 & $\infty$ & \tikzmarknode{m5}{6} & 6 & 6 & 6 & 6 & 6 & 6 \\ \hline
+			
+			$V_6$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & 3 & 2 & $\infty$ & $\infty$ & 12 & \tikzmarknode{m6}{10} & 10 & 10 & 10 & 10  \\ \hline
+			
+			$V_7$ & 6 & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ &  $\infty$ & 1 & $\infty$ & $\infty$ & $\infty$ & \tikzmarknode{m7}{12} & 12 & 12 & 12 & 12 \\ \hline
+			
+			$V_8$ & 8 & $\infty$ & $\infty$ & $\infty$ & 11 & $\infty$ & $\infty$ &  $\infty$ & $\infty$ & $\infty$ & 13 & 13 & \tikzmarknode{m8}{12} & 12 & 12 & 12 \\ \hline
+		\end{tabular}
+\end{center}
+\begin{tikzpicture}[remember picture,overlay]
+	\draw[thick,-latex'] (m1) -- (m2);
+	\draw[thick,-latex'] (m1) -- (m5);
+	\draw[thick,-latex'] (m2) -- (m3);
+	\draw[thick,-latex'] (m2) -- (m4);
+	\draw[thick,-latex'] (m4) -- (m6);
+	\draw[thick,-latex'] (m4) -- (m7);
+	\draw[thick,-latex'] (m6) -- (m8);
+\end{tikzpicture}
+\par
+\hspace{2mm}
+Найдем вершины, входящие в минимальные пути из $v_1$ во все остальные
+\par
+\hspace{4mm}вершины графа.
+\begin{enumerate} 
+	\setlength{\itemindent}{6mm}
+	\item Минимальный путь из $v_1$ в $v_2$: $v_1$ - $v_2$, его длина равна 3.
+	\begin{itemize} 
+		\setlength{\itemindent}{6mm}
+		\item $\lambda_1^{(0)} + C_{12} = 0 + 3 = 3 = \lambda_2^{(1)}$
+	\end{itemize} 
+	\item Минимальный путь из $v_1$ в $v_3$: $v_1$ - $v_2$ - $v_3$, его длина равна 4.
+	\begin{itemize} 
+		\setlength{\itemindent}{6mm}
+		\item $\lambda_1^{(0)} + C_{12} = 0 + 3 = 3 = \lambda_2^{(1)}$
+		\item $\lambda_2^{(0)} + C_{23} = 3 + 1 = 4 = \lambda_3^{(2)}$
+	\end{itemize}
+	\item Минимальный путь из $v_1$ в $v_4$: $v_1$ - $v_2$ - $v_4$, его длина равна 7.
+	\begin{itemize} 
+		\setlength{\itemindent}{6mm}
+		\item $\lambda_1^{(0)} + C_{12} = 0 + 3 = 3 = \lambda_2^{(1)}$
+		\item $\lambda_2^{(0)} + C_{24} = 0 + 7 = 7 = \lambda_4^{(2)}$
+	\end{itemize} 
+	\item Минимальный путь из $v_1$ в $v_5$: $v_1$ - $v_5$, его длина равна 6.
+	\begin{itemize} 
+		\setlength{\itemindent}{6mm}
+		\item $\lambda_1^{(0)} + C_{15} = 0 + 6 = 6 = \lambda_5^{(1)}$
+	\end{itemize}
+	\item Минимальный путь из $v_1$ в $v_6$: $v_1$ - $v_2$ - $v_4$ - $v_6$, его длина равна 10.
+	\begin{itemize} 
+		\setlength{\itemindent}{6mm}
+		\item $\lambda_1^{(0)} + C_{12} = 0 + 3 = 3 = \lambda_2^{(1)}$
+		\item $\lambda_2^{(1)} + C_{24} = 3 + 4 = 7 = \lambda_4^{(2)}$
+		\item $\lambda_4^{(2)} + C_{46} = 7 + 3 = 10 = \lambda_6^{(3)}$
+	\end{itemize} 
+	\newpage
+	\item Минимальный путь из $v_1$ в $v_7$: $v_1$ - $v_2$ - $v_4$ - $v_7$, его длина равна 12.
+	\begin{itemize} 
+		\setlength{\itemindent}{6mm}
+		\item $\lambda_1^{(0)} + C_{12} = 0 + 3 = 3 = \lambda_2^{(1)}$
+		\item $\lambda_2^{(1)} + C_{24} = 3 + 4 = 7 = \lambda_6^{(2)}$
+		\item $\lambda_4^{(2)} + C_{47} = 7 + 5 = 12 = \lambda_7^{(3)}$
+	\end{itemize} 
+	\item Минимальный путь из $v_1$ в $v_8$: $v_1$ - $v_2$ - $v_4$ - $v_6$ - $v_8$, его длина равна 12.
+	\begin{itemize} 
+		\setlength{\itemindent}{6mm}
+		\item $\lambda_1^{(0)} + C_{12} = 0 + 3 = 3 = \lambda_2^{(1)}$
+		\item $\lambda_2^{(1)} + C_{24} = 3 + 4 = 7 = \lambda_6^{(2)}$
+		\item $\lambda_4^{(2)} + C_{46} = 7 + 3 = \lambda_6^{(3)}$
+		\item $\lambda_4^{(3)} + C_{68} = 10 + 2 = 12 = \lambda_8^{(4)}$
+	\end{itemize} 
+\end{enumerate}
+\newpage
+\begin{center}
+	\textbf{Задание №5}
+\end{center}
+\begin{center}
+	\begin{tikzpicture}
+		[node distance={20mm}, thick, main/.style = {draw, circle}]
+		\node[main] (1) {$$};
+		\node[main] (2) [right of = 1] {$$};
+		\node[main] (3) [right of = 2]{$$};
+		\node[main] (4) [right of = 3]{$$};
+		\node[main] (5) [below of = 1]{$$};
+		\node[main] (6) [below of = 2]{$$};
+		\node[main] (7) [below of = 3] {$$};
+		\node[main] (8) [below of = 4] {$$};
+		\node[main] (9) [below of = 5] {$$};
+		\node[main] (10) [below of = 6] {$$};
+		\node[main] (11) [below of = 7] {$$};
+		\node[main] (12) [below of = 8] {$$};
+		\draw (1) -- node[above] {2} (2);
+		\draw (2) -- node[above] {6} (3);
+		\draw (3) -- node[above] {7} (4);
+		\draw (1) -- node[left] {1} (5);
+		\draw (2) -- node[left] {5} (6);
+		\draw (3) -- node[left] {5} (7);
+		\draw (4) -- node[right] {6} (8);
+		\draw (5) -- node[above] {8} (6);
+		\draw (6) -- node[above] {4} (7);
+		\draw (7) -- node[above] {1} (8);
+		\draw (5) -- node[left] {7} (9);
+		\draw (6) -- node[left] {5} (10);
+		\draw (7) -- node[left] {5} (11);
+		\draw (8) -- node[right] {5} (12);
+		\draw (9) -- node[below] {9} (10);
+		\draw (10) -- node[below] {7} (11);
+		\draw (11) -- node[below] {3} (12);
+	\end{tikzpicture} 
+\end{center}
+\hspace{6mm}Возможные остовные деревья с минимальной суммой длин ребер, равной 44:
+\begin{center}
+	\begin{tikzpicture}
+		[node distance={20mm}, thick, main/.style = {draw, circle}]
+		\node[main] (1) {$$};
+		\node[main] (2) [right of = 1] {$$};
+		\node[main] (3) [right of = 2]{$$};
+		\node[main] (4) [right of = 3]{$$};
+		\node[main] (5) [below of = 1]{$$};
+		\node[main] (6) [below of = 2]{$$};
+		\node[main] (7) [below of = 3] {$$};
+		\node[main] (8) [below of = 4] {$$};
+		\node[main] (9) [below of = 5] {$$};
+		\node[main] (10) [below of = 6] {$$};
+		\node[main] (11) [below of = 7] {$$};
+		\node[main] (12) [below of = 8] {$$};
+		\draw (9) -- node[left] {7} (5);
+		\draw (5) -- node[left] {1} (1);
+		\draw (2) -- node[above] {2} (1);
+		\draw (2) -- node[left] {5} (6);
+		\draw (6) -- node[left] {5} (10);
+		\draw (6) -- node[above] {4} (7);
+		\draw (7) -- node[right] {5} (3);
+		\draw (8) -- node[above] {1} (7);
+		\draw (8) -- node[right] {6} (4);
+		\draw (8) -- node[right] {5} (12);
+		\draw (11) -- node[below] {3} (12);
+	\end{tikzpicture} 
+	\hspace{20mm}
+	\begin{tikzpicture}
+		[node distance={20mm}, thick, main/.style = {draw, circle}]
+		\node[main] (1) {$$};
+		\node[main] (2) [right of = 1] {$$};
+		\node[main] (3) [right of = 2]{$$};
+		\node[main] (4) [right of = 3]{$$};
+		\node[main] (5) [below of = 1]{$$};
+		\node[main] (6) [below of = 2]{$$};
+		\node[main] (7) [below of = 3] {$$};
+		\node[main] (8) [below of = 4] {$$};
+		\node[main] (9) [below of = 5] {$$};
+		\node[main] (10) [below of = 6] {$$};
+		\node[main] (11) [below of = 7] {$$};
+		\node[main] (12) [below of = 8] {$$};
+		\draw (9) -- node[left] {7} (5);
+		\draw (5) -- node[left] {1} (1);
+		\draw (2) -- node[above] {2} (1);
+		\draw (6) -- node[left] {5} (2);
+		\draw (6) -- node[left] {5} (10);
+		\draw (7) -- node[above] {4} (6);
+		\draw (7) -- node[right] {5} (3);
+		\draw (7) -- node[above] {1} (8);
+		\draw (8) -- node[right] {6} (4);
+		\draw (11) -- node[right] {5} (7);
+		\draw (11) -- node[below] {3} (12);
+	\end{tikzpicture} 
+\end{center}
+\newpage
+\begin{center}
+	\textbf{Задание №6}\\
+\end{center}
+\begin{center}
+	\begin{tikzpicture}
+	[node distance={20mm}, thick, main/.style = {draw, circle}]
+	\node[main] (1) {$$};
+	\node[main] (2) [below right of = 1, below = 10pt, right = 50pt] {$$};;
+	\node[main] (3) [below left of = 1, below = 10pt, left = 50pt] {$$};;
+	\node[main] (4) [below right of = 1, below = 50pt, right = 3pt] {$$};;
+	\node[main] (5) [below left of = 1, below = 50pt, left = 3pt] {$$};;
+\draw (1) -- node[above] {$q_1$} (3);
+\draw (1) -- node[above] {$q_2$} (2);
+\draw (2) -- node[above] {$q_3$} (4);
+\draw (4) -- node[above] {$q_4$} (5);
+\draw (5) -- node[above] {$q_5$} (3);
+\draw (3) -- node[above] {$q_6$} (2);
+\draw (1) -- node[above] {$q_8$} (4);
+\draw (3) -- node[above] {$q_7$} (4);
+\draw (5) -- node[above] {$q_9$} (2);
+
+\end{tikzpicture} 
+\end{center}
+\hspace*{8mm}1. Зададим произвольную ориентацию\\
+\begin{center}
+\begin{tikzpicture}
+	[node distance={20mm}, thick, main/.style = {draw, circle}]
+	\node[main] (1) {$1$};
+	\node[main] (2) [below right of = 1, below = 10pt, right = 50pt] {$2$};;
+	\node[main] (3) [below left of = 1, below = 10pt, left = 50pt] {$3$};;
+	\node[main] (4) [below right of = 1, below = 50pt, right = 3pt] {$4$};;
+	\node[main] (5) [below left of = 1, below = 50pt, left = 3pt] {$5$};;
+\draw[->] (1) -- node[above] {$q_1$} (3);
+\draw[->] (1) -- node[above] {$q_2$} (2);
+\draw[->] (2) -- node[above] {$q_3$} (4);
+\draw[->] (4) -- node[above] {$q_4$} (5);
+\draw[->] (5) -- node[above] {$q_5$} (3);
+\draw[->] (3) -- node[above] {$q_6$} (2);
+\draw[->] (1) -- node[above] {$q_8$} (4);
+\draw[->] (3) -- node[above] {$q_7$} (4);
+\draw[->] (5) -- node[above] {$q_9$} (2);
+\end{tikzpicture} 
+\end{center}
+\noindent
+\hspace*{8mm}2. Построим произвольное остовное дерево D\\
+\begin{center}
+\begin{tikzpicture}
+	[node distance={20mm}, thick, main/.style = {draw, circle}]
+	\node[main] (1) {$1$};
+	\node[main] (2) [below right of = 1, below = 10pt, right = 50pt] {$2$};;
+	\node[main] (3) [below left of = 1, below = 10pt, left = 50pt] {$3$};;
+	\node[main] (4) [below right of = 1, below = 50pt, right = 3pt] {$4$};;
+	\node[main] (5) [below left of = 1, below = 50pt, left = 3pt] {$5$};;
+\draw[->] (1) -- node[above] {$q_1$} (3);
+\draw[->] (1) -- node[above] {$q_2$} (2);
+\draw[->] (2) -- node[above] {$q_3$} (4);
+\draw[->] (3) -- node[above] {$q_5$} (5);
+\end{tikzpicture} 
+\end{center}
+\newpage
+\noindent
+\hspace*{8mm}3. Найдем базис циклов и соответствующие вектор-циклы
+\vspace{3mm}
+\\
+\hspace*{8mm} $(D + q_8): \mu_1: v_1 - v_3 - v_2 - v_1\Rightarrow C(\mu_1) = (0,-1,-1,0,0,0,0,1,0)$
+\vspace{3mm}
+\\
+\hspace*{8mm} $(D + q_{4}): \mu_2: v_3 - v_4 - v_5 - v_1 - v_2 - v_3\Rightarrow C(\mu_2) = (1,1,1,1,1,0,0,0,0)$
+\vspace{3mm}
+\\
+\hspace*{8mm} $(D + q_{6}): \mu_3: v_5 - v_2 - v_1 - v_5\Rightarrow C(\mu_3) = (-1,-1,0,0,0,1,0,0,0)$
+\vspace{3mm}
+\\
+\hspace*{8mm} $(D + q_7): \mu_4: v_3 - v_5 - v_1 - v_2 - v_3\RightarrowC(\mu_4) = (1,1,1,0,0,0,1,0,0)$
+\vspace{3mm}
+\\
+\hspace*{8mm} $(D + q_9): \mu_5: v_2 - v_4 - v_5 - v_1 - v_2\RightarrowC(\mu_5) = (1,1,0,0,1,0,0,0,1)$
+\vspace{3mm}
+\\ 
+\hspace*{8mm}4. Составим цикломатическую матрицу
+\vspace{5mm}
+\\
+\hspace*{12mm}
+\setcounter{MaxMatrixCols}{20}
+$C = 
+\begin{pmatrix}
+	0 & -1 & -1 & 0 & 0 & 0 & 0 & 1 & 0 \\
+	1 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+	-1 & -1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+	1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 0 \\
+	1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 1
+\end{pmatrix}
+$
+\vspace{5mm}
+\\ 
+\hspace*{8mm}5. Запишем закон Кирхгова для напряжений
+\vspace{5mm}
+\\
+\hspace*{10mm}
+$
+\begin{pmatrix}
+	0 & -1 & -1 & 0 & 0 & 0 & 0 & 1 & 0 \\
+	1 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+	-1 & -1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+	1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 0 \\
+	1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 1
+\end{pmatrix}
+\begin{pmatrix}
+	u_1 \\
+	u_2 \\ 
+	u_3 \\
+	u_4 \\
+	u_5 \\
+	u_6 \\
+	u_7 \\
+	u_8 \\
+	u_9 \\
+\end{pmatrix} = 0
+$
+
+$
+\begin{cases}
+	u_8 - u_2 - u_3 = 0\\
+	u_1 + u_2 + u_3 + u_4 + u_5 = 0\\
+	u_6 - u_1 - u_2 = 0\\
+	u_1 + u_2 + u_3 + u_7 = 0\\
+	u_1 + u_2 + u_5 + u_9 = 0
+\end{cases}
+$
+\vspace{5mm}
+\\
+\hspace*{4mm}
+$
+\begin{cases}
+	u_8 = u_2 + u_3\\
+	u_1 = - u_2 - u_3 - u_4 - u_5\\
+	u_6 = u_1 + u_2\\
+	u_1 = - u_2 - u_3 - u_7\\
+	u_1 = - u_2 - u_5 - u_9
+\end{cases}
+$
+\newpage
+\noindent
+\hspace*{8mm}6,7. Выпишем закон и уравнения Кирхгова для токов
+\vspace{5mm}
+\\
+\hspace*{8mm}Найдем матрицу инцидентности
+\vspace{5mm}
+\\
+\hspace*{8mm}
+$
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+		\hline
+		$ $ & $q_1$ & $q_2$ & $q_3$ & $q_4$ & $q_5$ & $q_6$ & $q_7$ & $q_8$ & $q_9$ \\
+		\hline
+		$v_1$ & $1$ & -1 & 0 & 0 & 0 & 0 & 0 & $-1$ & 0\\
+		\hline
+		$v_2$ & 0 & 1 & -1 & 0 & 0 & 1 & $0$ & $0$ & -1 \\
+		\hline
+		$v_3$ & 0 & 0 & 1 & -1 & 0 & $0$ & $-1$ & 1 & 0 \\
+		\hline
+		$v_4$ & $0$ & $0$ & 0 & 1 & -1 & 0 & 0 & 0 & $1$\\
+		\hline
+		$v_5$ & -1 & 0 & 0 & 0 & 1 & -1 & 1 & 0 & $0$\\
+		\hline
+	\end{tabular}
+$
+\vspace{5mm}
+\\
+\hspace*{10mm}
+$
+\begin{pmatrix}
+	$1$ & -1 & 0 & 0 & 0 & 0 & 0 & $-1$ & 0 \\
+	0 & 1 & -1 & 0 & 0 & 1 & $0$ & $0$ & -1 \\
+	0 & 0 & 1 & -1 & 0 & $0$ & $-1$ & 1 & 0\\
+	$0$ & $0$ & 0 & 1 & -1 & 0 & 0 & 0 & $1$\\
+	-1 & 0 & 0 & 0 & 1 & -1 & 1 & 0 & $0$ \\
+\end{pmatrix}
+\begin{pmatrix}
+	I_1 \\
+	I_2 \\ 
+	I_3 \\
+	I_4 \\
+	I_5 \\
+	I_6 \\
+	I_7 \\
+	I_8 \\
+	I_9 \\
+\end{pmatrix} = 0
+$
+\vspace{5mm}
+\\
+\hspace*{8mm}
+$
+\begin{cases}
+	I_1 - I_2 - I_8 = 0 \\ 
+	I_2 - I_3 + I_6 - I_9 = 0 \\
+	I_3 - I_4 + I_8 - I_7 = 0 \\
+	I_4 - I_5 + I_9 = 0 \\
+	I_5 - I_1 - I_6 + I_7 = 0 \\
+\end{cases}
+\begin{cases}
+	I_1 = I_2 + I_8 \\ 
+	I_3 = I_4 + I_7 - I_8 \\
+	I_4 = I_5 - I_9 \\
+	I_5 = I_1 + I_6 - I_7 \\
+\end{cases}
+$
+\newpage
+\noindent
+\hspace{6mm} 8. Подставим закон Ома
+\vspace{5mm}
+\\
+\hspace*{8mm}
+$
+\begin{cases}
+	0 = -I_8R_8 + I_2R_2 + I_3R_3 \\ 
+	E_1 + E_2 = -I_2R_2 - I_3R_3 - I_4R_4 \\
+	E_1 = I_6R_6 - I_2R_2 \\
+	E_1 = -I_2R_2 - I_3R_3 - I_7R_7 \\
+	E_1 + E_2 = -I_2R_2 - I_9R_9 \\
+\end{cases}
+$
+\vspace{5mm}
+\\
+\hspace*{6mm} 9. Совместная система имеет вид
+\vspace{5mm}
+\\
+\hspace*{8mm}
+$
+\begin{cases}
+	I_1 = I_2 + I_8 \\ 
+	I_3 = I_4 + I_7 - I_8 \\
+	I_4 = I_5 - I_9 \\
+	I_5 = I_1 + I_6 - I_7 \\
+	0 = -I_8R_8 + I_2R_2 + I_3R_3 \\ 
+	E_1 + E_2 = -I_2R_2 - I_3R_3 - I_4R_4 \\
+	E_1 = I_6R_6 - I_2R_2 \\
+	E_1 = -I_2R_2 - I_3R_3 - I_7R_7 \\
+	E_1 + E_2 = -I_2R_2 - I_9R_9 \\
+\end{cases}
+$
+\vspace{5mm}
+\\
+\hspace*{8mm}
+9 уравнений и 9 неизвестных: ($I_1, I_2, I_3, I_4, I_5, I_6, I_7, I_8, I_9)$ ЭДС $E_1 E_2$ и \\
+\hspace*{8mm}
+сопротивления $R_2, R_3, R_4, R_5, R_6, R_7, R_8, R_9$ известны
+\newpage
+\begin{center}
+	\textbf{Задание №7}
+\end{center}
+\vspace{5mm}
+
+\begin{tikzpicture}
+	[node distance={20mm}, thick, main/.style = {draw, circle}]
+	\hspace*{40mm}
+	\node[main] (1) {$1$};
+	\node[main] (2) [above right of = 1, above = 20pt, right = 3pt] {$2$};
+	\node[main] (3) [above right of = 2, above = -5mm, right = 40pt, node distance={20mm}]{$3$};
+	\node[main] (4) [below right of = 3, below = -5mm, right = 40pt]{$4$};
+	\node[main] (5) [right of = 1, node distance={45mm}]{$5$};
+	\node[main] (6) [right of = 5, node distance={65mm}]{$9$};
+	\node[main] (7) [below right of = 1, below = 20pt, right = 3pt] {$6$};
+	\node[main] (8) [below right of = 7, below = -5mm, right = 40pt, node distance={20mm}]{$7$};
+	\node[main] (9) [above right of = 8, above= -5mm, right = 40pt]{$8$};
+	\draw[->] (1) -- node[above = 1mm, rotate=45] {0+3} (2);
+	\draw[->] (2) -- node[above] {0+3} (3);
+	\draw[->] (3) -- node[above=1mm, rotate=-10] {0+3+6} (4);
+	\draw[->] (4) -- node[above = 1mm, right = 2mm] {0+3+6} (6);
+	\draw[->] (1) to [out=0,in=230,looseness=0.5] node[above = 2mm, left = 5mm, rotate=30] {0+6} (3);
+	\draw[->] (1) -- node[above = 3mm, right=-2mm] {0+4+1} (5);
+	\draw[->] (5) -- node[above] {0+4} (6);
+	\draw[->] (1) -- node[below, rotate=-45] {0+3} (7);
+	\draw[->] (7) -- node[below] {0+3} (8);
+	\draw[->] (8) -- node[below, rotate = 15] {0+3+4} (9);
+	\draw[->] (9) -- node[below = 1mm , right = 3mm] {0+3+4} (6);
+	\draw[->] (1) to [out=0,in=130,looseness=0.5] node[below = 2mm, left = 5mm, rotate=-30] {0+4} (8);
+	\draw[->] (2) -- node[above = 1mm, right = 1mm] {0} (5);
+	\draw[->] (5) -- node[above,rotate=30] {0} (4);
+	\draw[->] (7) -- node[above = 1mm] {0} (5);
+	\draw[->] (5) -- node[above,rotate=-30] {0+1} (9);
+\end{tikzpicture} 
+\vspace{5mm}
+\par
+Полный поток:
+\begin{enumerate} 
+	\setlength{\itemindent}{3mm}
+	\item $v_1 - v_2 - v_3 - v_4 - v_9$
+	\begin{itemize}
+		\setlength{\itemindent}{3mm}
+		\item $\min\{3, 3, 9, 11\} = 3$
+	\end{itemize}
+	\item $v_1 - v_6 - v_7 - v_8 - v_9$
+	\begin{itemize}
+		\setlength{\itemindent}{3mm}
+		\item $\min\{3, 3, 7, 13\} = 3$
+	\end{itemize}
+	\item $v_1 - v_5 - v_9$
+	\begin{itemize}
+		\setlength{\itemindent}{3mm}
+		\item $\min\{5, 4\} = 4$
+	\end{itemize}
+	\item $v_1 - v_3 - v_4 - v_9$
+	\begin{itemize}
+		\setlength{\itemindent}{3mm}
+		\item $\min\{10, 9 - 3, 11 - 3\} = 6$
+	\end{itemize}
+	\item $v_1 - v_7 - v_8 - v_9$
+	\begin{itemize}
+		\setlength{\itemindent}{3mm}
+		\item $\min\{7, 7-3, 13-3\} = 4$
+	\end{itemize}
+	\item $v_1 - v_5 - v_8 - v_9$
+	\begin{itemize}
+		\setlength{\itemindent}{3mm}
+		\item $\min\{5-4, 5, 13-7\} = 1$
+	\end{itemize}
+\end{enumerate}
+\par
+Величина полного потока $\Phi_{\text{пол.}} = 3 + 3 + 4 + 6 + 4 + 1 = 21$\\\\\
+\par
+\begin{tikzpicture}
+	[node distance={20mm}, thick, main/.style = {draw, circle}]
+	\hspace*{40mm}
+	\node[main] (1) {$1$};
+	\node[main] (2) [above right of = 1, above = 20pt, right = 3pt] {$2$};
+	\node[main] (3) [above right of = 2, above = -5mm, right = 40pt, node distance={20mm}]{$3$};
+	\node[main] (4) [below right of = 3, below = -5mm, right = 40pt]{$4$};
+	\node[main] (5) [right of = 1, node distance={45mm}]{$5$};
+	\node[main] (6) [right of = 5, node distance={65mm}]{$9$};
+	\node[main] (7) [below right of = 1, below = 20pt, right = 3pt] {$6$};
+	\node[main] (8) [below right of = 7, below = -5mm, right = 40pt, node distance={20mm}]{$7$};
+	\node[main] (9) [above right of = 8, above= -5mm, right = 40pt]{$4$};
+	\draw[->] (1) -- node[above] {3} (2);
+	\draw[->] (2) -- node[above] {3-2} (3);
+	\draw[->] (3) -- node[above] {9} (4);
+	\draw[->] (4) -- node[right] {9+2} (6);
+	\draw[->] (1) to [out=0,in=230,looseness=0.5] node[above = -2mm, left = 5mm] {6+2} (3);
+	\draw[->] (1) -- node[above = 3mm, right=5mm] {5} (5);
+	\draw[->] (5) -- node[above] {4} (6);
+	\draw[->] (1) -- node[below] {3} (7);
+	\draw[->] (7) -- node[below] {3-3} (8);
+	\draw[->] (8) -- node[below] {7} (9);
+	\draw[->] (9) -- node[below] {8+3} (6);
+	\draw[->] (1) to [out=0,in=130,looseness=0.5] node[below = -2mm, left = 5mm] {4+3} (8);
+	\draw[->] (2) -- node[right] {0+2} (5);
+	\draw[->] (5) -- node[above] {0+2} (4);
+	\draw[->] (7) -- node[above] {0+3} (5);
+	\draw[->] (5) -- node[above] {1+3} (9);
+\end{tikzpicture} \\\\
+Максимальный поток:
+\par
+\begin{enumerate} 
+	\setlength{\itemindent}{3mm}
+	\item $v_1 - v_3 - v_2 - v_5 - v_4 - v_9$
+	\begin{itemize}
+		\setlength{\itemindent}{3mm}
+		\item $\Delta_1 = \min\{10-6, 3, 2, 3, 11-9\} = 2$
+	\end{itemize}
+	\item $v_1 - v_7 - v_6 - v_5 - v_8 - v_9$
+	\begin{itemize}
+		\setlength{\itemindent}{3mm}
+		\item $\Delta_2 = \min\{7-4, 3, 6, 5, 13-8\} = 3$
+	\end{itemize}
+\end{enumerate}
+\par
+Величина максимального потока $\Phi_{\text{макс.}} = 11+4+11 = 26$
+\newpage
+\begin{center}
+	\textbf{Задание №8}
+\end{center}
+\begin{center}
+	\textbf{Перечисление путей ориентированного графа методом латинской композиции}
+\end{center}
+\textbf{1. Основные понятия и определения} 
+\begin{flushleft}
+	\textbf{Определение 1.} Тензор - матрица, элементами которой могут быть переменные, векторы, матрицы, символы, текстовые строки или другие тензоры.
+\end{flushleft}
+\begin{flushleft}
+	\textbf{Определение 2.} Метод латинской композиции - матричный(тензорный) способ перечисления путей в графе и орграфе. Способ основывается на построении матрицы с обозначением путей, которые идут от i к j вершине графа (i,j – строка и столбец матрицы соответственно), а затем возведение этой матрицы в степень до тех пор, пока матрица не станет нулевой. Каждая степень исходной матрицы будет содержать пути определённой длин - таким образом будут перечислены все пути в орграфе.
+\end{flushleft}
+\textbf{2. Описание алгоритма}
+\begin{flushleft}
+	В данной работе используется адаптированный для задачи раскраски вершин графа алгоритм поиска в глубину:
+	\begin{enumerate}
+		\item В интерактивном окне указывается число вершин графа.
+		\item После этого в том же окне отмечаются вершины, между которыми есть связь.
+		\item После указания желаемого количества связей между вершинами в графе программа автоматически заполняет матрицу, после чего возводит ее в (n-2) степень.
+		\item В результате возведения матрицу в степень m, мы будем получать простые пути длины m. Возведение матрицы происходит до тех пор, пока она не станет нулевой или число возведений в степень не достигнет (n-2) раз.
+		\item После того, как в результате возведения матрицы в степень получается нулевая матрица, программа выводит полученные графы.
+		\item После вывода всех графов с окрашенными путями, можно продолжить пользоваться программой, указав новое число вершин в графе или изменив связи между вершинами.
+	\end{enumerate}
+\end{flushleft}
+\newpage
+\noindent
+\textbf{3. Блок-схема} 
+\\
+\begin{tikzpicture}
+	[node distance={30mm}, thick, main/.style = {draw, circle}]
+	\hspace*{60mm}
+	\node[block] (1) {Начало};
+	\node[block] (2) [below of = 1] {Считывается количество вершин n}; 
+	\node[block] (3) [below of = 2] {Указываются связи между вершинами}; 
+	\node[block] (4) [below of = 3] {Исходя из связей между вершинами, создается матрица}; 
+	\node[block] (5) [below of = 4] {Матрица возводится в степень}; 
+	\node[block] (6) [below of = 5] {Степень матрицы равна (n-2)?} node[right of = 6, right = 1mm] {Нет} node[left of = 6, left = 1mm] {Да}; 
+	\node[block] (7) [below of = 6] {Вывод графов с окрашенными путями};
+	\node[block] (8) [below of = 7] {Конец};
+	\draw[->] (1) to (2);
+	\draw[->] (2) to (3);
+	\draw[->] (3) to (4);
+	\draw[->] (4) to (5);
+	\draw[->] (5) to (6);
+	\draw[->] (6) to [out=0,in=0,looseness=0.3]  (5);
+	\draw[->] (6) to [out=180,in=180,looseness=0.3]  (7);
+	\draw[->] (7) to (8);
+
+\end{tikzpicture}\\\\\\
+
+\textbf{5. Вычисление сложности алгоритма} 
+\begin{flushleft}
+ 	Поскольку в программе осуществляется только умножение матриц (n-2) раз, то сложность данного алгоритма равна (n - 2) * O(n ^ 3).
+	\vspace{3mm}
+	\\
+\end{flushleft}
+\newpage
+
+\newpage
+\textbf{7. Скриншот программы для данного примера} 
+\vspace{5mm}
+\\
+\hspace*{5mm}
+\includegraphics [scale=0.65]{5.png}\\\\
+\hspace*{5mm}
+\includegraphics [scale=0.80]{4.png}
+\newpage
+\noindent
+\textbf{8. Прикладная задача} 
+\begin{flushleft}
+	Если дополнить орграф информацией о длине путей, то данный алгоритм можно будет применять для построения всех возможных обходов пунктов, необходимых для посещения. В частности, речь может идти о курьерах, которым будет крайне удобно оптимизировать свой маршрут путем расчёта минимального пути, по которому можно обойти как все пункты, так и их часть.
+\end{flushleft}
+\end{document}
